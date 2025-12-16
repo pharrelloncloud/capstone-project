@@ -41,14 +41,5 @@ resource "aws_instance" "k3s" {
   key_name      = var.key_name
   security_groups = [aws_security_group.web_sg.name]
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt update -y",
-      "sudo apt install -y docker.io",
-      "sudo systemctl enable docker",
-      "sudo systemctl start docker",
-      "curl -sfL https://get.k3s.io | sh -"
-    ]
-  }
 }
 
