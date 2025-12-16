@@ -49,13 +49,6 @@ resource "aws_instance" "k3s" {
       "sudo systemctl start docker",
       "curl -sfL https://get.k3s.io | sh -"
     ]
-
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = file("~/.ssh/capstone-project.pem")
-      host        = self.public_ip
-    }
   }
 }
 
