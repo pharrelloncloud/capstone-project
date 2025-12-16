@@ -1,9 +1,6 @@
 provider "aws" {
-  region = "eu-west-2"  # my AMI Region
+  region = "eu-west-2"
 }
-
-variable "ami_id" {}
-variable "key_name" {}
 
 resource "aws_security_group" "web_sg" {
   name        = "web-sg"
@@ -62,6 +59,3 @@ resource "aws_instance" "k3s" {
   }
 }
 
-output "ec2_public_ip" {
-  value = aws_instance.k3s.public_ip
-}
