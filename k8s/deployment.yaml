@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: static-site
+  name: nginx-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: static-site
+      app: nginx
   template:
     metadata:
       labels:
-        app: static-site
+        app: nginx
     spec:
       containers:
-        - name: nginx
-          image: pharrelloncloud/k8s-static-app:latest
-          ports:
-            - containerPort: 80
+      - name: nginx
+        image: pharrelloncloud/capstone-app:latest
+        ports:
+        - containerPort: 80

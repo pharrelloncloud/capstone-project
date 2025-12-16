@@ -1,23 +1,15 @@
-terraform {
-  required_version = ">= 1.5.0"
-
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-  }
-}
-
 provider "aws" {
-  region = var.aws_region
+  region = "eu-west-2"  # my AMI Region
 }
+
+variable "ami_id" {}
+variable "key_name" {}
 
 resource "aws_security_group" "web_sg" {
-  name        = "k3s-web-sg"
+  name        = "web-sg"
   description = "Allow HTTP and NodePort access"
 
-  ingress {
+  ingress { 
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
@@ -50,12 +42,26 @@ resource "aws_instance" "k3s" {
   ami           = var.ami_id
   instance_type = "t3.micro"
   key_name      = var.key_name
+  security_groups = [aws_security_group.web_sg.name]
 
-  vpc_security_group_ids = [aws_security_group.web_sg.id]
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt update -y",
+      "sudo apt install -y docker.io",
+      "sudo systemctl enable docker",
+      "sudo systemctl start docker",
+      "curl -sfL https://get.k3s.io | sh -"
+    ]
 
-  user_data = file("${path.module}/../scripts/install_k3s.sh")
-
-  tags = {
-    Name = "k3s-node"
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("~/.ssh/capstone-project.pem")
+      host        = self.public_ip
+    }
   }
+}
+
+output "ec2_public_ip" {
+  value = aws_instance.k3s.public_ip
 }
