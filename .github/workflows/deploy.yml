@@ -63,6 +63,7 @@ jobs:
         script: |
           if [ ! -d capstone-project ]; then
           git clone https://github.com/pharrelloncloud/capstone-project.git 
+          else
           fi
           cd capstone-project
           sudo k3s kubectl apply -f k8s/deployment.yaml
