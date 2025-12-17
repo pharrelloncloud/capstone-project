@@ -38,8 +38,9 @@ Deploys the application to Kubernetes via SSH
 GitHub → GitHub Actions → Docker Hub → AWS EC2 (K3s) → Kubernetes Pods → Public Service  
 
 ## 📂 Project Structure
-
-```capstone-project/
+```
+$ tree
+capstone-project/
 ├── app/
 │   ├── Dockerfile
 │   └── index.html
@@ -53,30 +54,94 @@ GitHub → GitHub Actions → Docker Hub → AWS EC2 (K3s) → Kubernetes Pods �
 │   ├── variables.tf
 │   ├── outputs.tf
 │   └── terraform.tfvars
-└── README.md ```   
-
+└── README.md
+ ```  
 ## ⚙️ Infrastructure (Terraform)
 
 Terraform is used to provision:  
 
-An EC2 instance (t3.small) to run Kubernetes   
+- An EC2 instance (t3.small) to run Kubernetes   
 
-A Security Group allowing:  
+- A Security Group allowing:  
 
-SSH (22)  
+    - SSH (22)  
 
-HTTP (80)  
+    - HTTP (80)  
 
-Kubernetes NodePort traffic  
+    - Kubernetes NodePort traffic  
 
-Key Terraform concepts demonstrated:  
+Key Terraform concepts demonstrated:    
 
 - Providers
 
-Variables
+- Variables
 
-Outputs
+- Outputs
 
-State management
+- State management
 
-Resource importing
+- Resource importing
+
+## 🐳 Containerisation (Docker)
+
+The application is packaged as a Docker image using Nginx:
+
+- Lightweight
+
+- Stateless
+
+- Production-ready container
+
+The image is pushed to Docker Hub via GitHub Actions using encrypted GitHub Secrets.
+
+## ☸️ Kubernetes (K3s)
+
+The application is deployed to Kubernetes using:
+
+- Deployment for pod management
+
+- Service (NodePort) for external access
+
+K3s was chosen to simulate a real Kubernetes environment on limited cloud resources.
+
+## 🔁 CI/CD Pipeline (GitHub Actions)
+
+On every push to main:
+
+1. Docker image is built
+
+2. Image is pushed to Docker Hub
+
+3. Terraform provisions / updates infrastructure
+
+4. Application is deployed to Kubernetes via SSH
+
+This mirrors how many small-to-mid production systems operate and I am happy I succeeded.
+
+## How to Access App
+
+1. Get the Public IPv4 from EC2 on AWS
+2. Enter http://<EC2_PUBLIC_IP>:30080 in a browser.
+
+## 🧠 Key Learnings
+
+- Kubernetes requires sufficient resources (1GB RAM is not enough) so moved from t3.micro to t3.small  
+
+- Terraform state management is critical in real environments  
+
+- CI/CD pipelines must handle infrastructure and application deployment  
+
+- Automation doesn’t remove responsibility — it shifts it left  
+
+## 🔮 Improvements / Next Steps
+
+- Use an Application Load Balancer
+
+- Replace SSH with GitHub OIDC
+
+- Add Ingress + TLS
+
+- Move to EKS
+
+- 
+Add monitoring (Prometheus / Grafana)
