@@ -1,3 +1,12 @@
+terraform {
+  backend "s3" {
+    bucket         = "capstone-terraform-state-236664963412"
+    key            = "capstone/terraform.tfstate"
+    region         = "eu-west-2"
+    encrypt        = true
+  }
+}
+
 provider "aws" {
   region = "eu-west-2"
 }
