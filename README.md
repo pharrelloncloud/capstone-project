@@ -145,6 +145,6 @@ This mirrors how many small-to-mid production systems operate and I am happy I s
 
 - Move to EKS
 
-- 
-Add monitoring (Prometheus / Grafana)
+- Add monitoring (Prometheus / Grafana)
+
 
