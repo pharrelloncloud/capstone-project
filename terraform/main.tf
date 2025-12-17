@@ -46,7 +46,7 @@ resource "aws_security_group" "web_sg" {
 
 resource "aws_instance" "k3s" {
   ami           = var.ami_id
-  instance_type = "t3.micro"
+  instance_type = "t3.small"
   key_name      = var.key_name
   security_groups = [aws_security_group.web_sg.name]
 
