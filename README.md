@@ -117,11 +117,13 @@ On every push to main:
 4. Application is deployed to Kubernetes via SSH
 
 This mirrors how many small-to-mid production systems operate and I am happy I succeeded.
+<img width="1915" height="1063" alt="Screenshot 2025-12-17 230514" src="https://github.com/user-attachments/assets/0f5139bf-2d40-4f29-9d96-d02608118356" />
 
 ## How to Access App
 
 1. Get the Public IPv4 from EC2 on AWS
 2. Enter http://<EC2_PUBLIC_IP>:30080 in a browser.
+<img width="1582" height="800" alt="Screenshot 2025-12-17 232800" src="https://github.com/user-attachments/assets/1c546894-1f87-4463-b1b2-46f5276fce5b" />
 
 ## 🧠 Key Learnings
 
@@ -145,3 +147,4 @@ This mirrors how many small-to-mid production systems operate and I am happy I s
 
 - 
 Add monitoring (Prometheus / Grafana)
+
