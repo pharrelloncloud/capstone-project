@@ -1,12 +1,9 @@
 #!/bin/bash
 set -e
 
-apt update -y
-apt install -y curl docker.io
+if ! command -v k3s >/dev/null 2>&1; then
+  curl -sfL https://get.k3s.io | sh -
+fi
 
-systemctl enable docker
-systemctl start docker
+sudo chmod 644 /etc/rancher/k3s/k3s.yaml
 
-curl -sfL https://get.k3s.io | sh -
-
-chmod 644 /etc/rancher/k3s/k3s.yaml
